@@ -1,2 +1,0 @@
-# DevOpsEasy
-Our GITHub playground
