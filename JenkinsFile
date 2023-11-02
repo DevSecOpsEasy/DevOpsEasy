@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                echo 'Clone from GitHub'
+				git branch: 'main', url: 'https://github.com/hkhcoder/vprofile-project.git'
+            }
+        }
+		
+		stage('Build') {
+            steps {
+                echo 'Build with Maven'
+				sh 'mvn clean install'
+            }
+        }
+		
+		stage('Deploy') {
+            steps {
+                echo 'Deploy to Tomcat'
+				deploy adapters: [tomcat9(credentialsId: 'Tomcat-Creds', path: '', url: 'http://3.80.53.123:8081/')], contextPath: 'Game-Of-Life', war: '**/*.war'
+            }
+        }
+    }
+}
